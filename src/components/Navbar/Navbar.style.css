@@ -1,0 +1,8 @@
+.nav-item {
+  @apply px-2  hover:border-b-2 hover:border-primary;
+}
+
+.nav-item__dropdown {
+  @apply p-2  bg-secondary absolute;
+  top: 86px;
+}
