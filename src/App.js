@@ -1,14 +1,15 @@
 // components
 import Navbar from './components/Navbar/Navbar';
+import Main from './components/Main/Main';
 
 import {ThemeProvider} from './contexts/ThemeContext';
 
 function App() {
   return (
-    <div className="App">
+    <div className="app">
       <ThemeProvider>
         <Navbar />
-        <h1>Hello</h1>
+        <Main />
       </ThemeProvider>
     </div>
   );

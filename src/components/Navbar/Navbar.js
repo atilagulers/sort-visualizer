@@ -12,8 +12,8 @@ function Navbar() {
 
       <div>
         <div className="nav-item">here</div>
-        <div className="nav-item__dropdown">
-          <ul className="flex flex-col gap-3">
+        <div className="nav-item__dropdown hidden">
+          <ul className="flex flex-col gap-3 ">
             <li>here 1</li>
             <li>here 1</li>
             <li>here 1</li>
