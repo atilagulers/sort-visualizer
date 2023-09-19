@@ -35,7 +35,7 @@ function Navbar() {
             defaultValue={state.colWidth}
             step={10}
             min={10}
-            max={100}
+            max={300}
             label={'count'}
           />
         </div>
