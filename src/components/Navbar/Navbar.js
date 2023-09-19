@@ -11,7 +11,7 @@ function Navbar() {
   const handleChangeColWidth = (e) => {
     dispatch({
       type: 'CHANGE_COLUMN_WIDTH',
-      payload: {colWidth: e.target.value},
+      payload: {colWidth: 300 - e.target.value},
     });
   };
 
@@ -33,7 +33,7 @@ function Navbar() {
           <Range
             handleChange={handleChangeColWidth}
             defaultValue={state.colWidth}
-            step={10}
+            step={20}
             min={10}
             max={300}
             label={'count'}

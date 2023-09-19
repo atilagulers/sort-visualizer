@@ -1,8 +1,8 @@
 import {createContext, useContext, useReducer} from 'react';
 
 const initialState = {
-  colWidth: 40,
-  speed: 0.5,
+  colWidth: 20,
+  speed: 0.8,
 };
 
 const reducer = (state, action) => {
