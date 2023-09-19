@@ -28,8 +28,8 @@ function Navbar() {
         <h1 className="text-3xl font-bold">Sort Algorithms</h1>
       </div>
 
-      <div className="flex">
-        <div className="nav-item">
+      <div className="px-2 h-full flex items-center">
+        <div>
           <Range
             handleChange={handleChangeColWidth}
             defaultValue={state.colWidth}
@@ -39,7 +39,7 @@ function Navbar() {
             label={'count'}
           />
         </div>
-        <div className="nav-item">
+        <div>
           <Range
             handleChange={handleChangeSpeed}
             defaultValue={state.speed}
@@ -51,7 +51,13 @@ function Navbar() {
         </div>
       </div>
 
-      <div className="nav-item">here 3</div>
+      <div className="seperator w-[1px] h-full border"></div>
+
+      <div className="border-r-2 border-r-indigo-400"> </div>
+
+      <div className="nav-item">
+        <div>here 3</div>
+      </div>
 
       <div>
         <button className="btn" onClick={toggleTheme}>

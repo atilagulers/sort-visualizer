@@ -1,6 +1,7 @@
 .nav-item {
-  @apply px-2;
+  @apply px-2  h-full flex place-items-center hover:bg-primary hover:text-white;
 }
+
 /*hover:border-b-2 hover:border-primary;*/
 
 /*.nav-item__dropdown {
