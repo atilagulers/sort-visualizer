@@ -3,6 +3,7 @@ import './Main.style.css';
 import {getTextSize} from '../../Utils/Helpers';
 import {useStateContext} from '../../contexts/StateContext';
 import {delay} from '../../Utils/Helpers';
+import {bubbleSort, swapColumns} from '../../Utils/SortFunctions';
 
 function Main() {
   const chartContainerRef = useRef(null);
@@ -42,43 +43,74 @@ function Main() {
     updateColumns(newArr);
   }, [state.colWidth]);
 
-  async function bubbleSort() {
-    const columns = chartContainerRef.current.querySelectorAll('.column');
-
-    for (let i = 0; i < columns.length - 1; i++) {
-      for (let j = 0; j < columns.length - i - 1; j++) {
-        const col1 = columns[j];
-        const col2 = columns[j + 1];
-        col1.classList.add('bg-blue-200');
-        col2.classList.add('bg-blue-200');
-
-        const num1 = parseInt(col1.getAttribute('data-number'));
-        const num2 = parseInt(col2.getAttribute('data-number'));
-
-        if (num1 > num2) {
-          const tmpHeight = col1.style.height;
-          col1.style.height = col2.style.height;
-          col2.style.height = tmpHeight;
-
-          const tmpNumber = col1.getAttribute('data-number');
-          col1.setAttribute('data-number', col2.getAttribute('data-number'));
-          col2.setAttribute('data-number', tmpNumber);
-
-          const tmpNumberText = col1.firstChild.textContent;
-          col1.firstChild.textContent = col2.firstChild.textContent;
-          col2.firstChild.textContent = tmpNumberText;
-        }
-
-        await delay(state.speed);
-        col1.classList.remove('bg-blue-200');
-        col2.classList.remove('bg-blue-200');
-      }
+  async function mergeSort(arr) {
+    if (arr.length <= 1) {
+      return arr;
     }
+
+    const middle = Math.floor(arr.length / 2);
+    const left = arr.slice(0, middle);
+    const right = arr.slice(middle);
+
+    return new Promise(async (resolve) => {
+      const sortedArr = await merge(
+        await mergeSort(left),
+        await mergeSort(right)
+      );
+      resolve(sortedArr);
+    });
+  }
+
+  async function merge(leftArr, rightArr) {
+    const sortedArr = [];
+
+    while (leftArr.length && rightArr.length) {
+      const leftCol = leftArr[0];
+      const rightCol = rightArr[0];
+
+      leftCol.classList.add('bg-green-400');
+      rightCol.classList.add('bg-green-400');
+
+      const leftNum = parseInt(leftCol.getAttribute('data-number'));
+      const rightNum = parseInt(rightCol.getAttribute('data-number'));
+      await delay(0.01);
+
+      if (leftNum <= rightNum) {
+        //swapColumns(rightCol, leftCol);
+        sortedArr.push(leftArr.shift());
+      } else {
+        swapColumns(leftCol, rightCol);
+        sortedArr.push(rightArr.shift());
+      }
+      console.log(sortedArr.length);
+      leftCol.classList.remove('bg-green-400');
+      rightCol.classList.remove('bg-green-400');
+    }
+    console.log(
+      [...sortedArr, ...leftArr, ...rightArr].map((el) =>
+        el.getAttribute('data-number')
+      )
+    );
+
+    return [...sortedArr, ...leftArr, ...rightArr];
+  }
+
+  async function handleClickSort() {
+    const myArr = arr.slice();
+    const columns = chartContainerRef.current.querySelectorAll('.column');
+    const columnsArray = Array.from(columns);
+    //console.log(columnsArray[0].getAttribute('data-number'));
+
+    const sorted = await mergeSort(columnsArray);
+    for (let i = 0; i < sorted.length; i++) {
+      console.log(sorted[i].getAttribute('data-number'));
+    }
+    //bubbleSort(state.speed, columns);
   }
 
   return (
     <div className="main">
-      <button onClick={bubbleSort} className="bg-white">
+      <button onClick={handleClickSort} className="bg-white">
         sort
       </button>
       <div className="chart flex" ref={chartContainerRef}></div>
