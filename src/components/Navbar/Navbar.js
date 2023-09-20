@@ -1,9 +1,7 @@
-import React, {useEffect} from 'react';
-import {useTheme} from '../../contexts/ThemeContext';
 import './Navbar.style.css';
 import Range from '../Range/Range';
 import {useStateContext} from '../../contexts/StateContext';
-import {bubbleSort, mergeSort, swapColumns} from '../../Utils/SortFunctions';
+import {bubbleSort, mergeSort} from '../../Utils/SortFunctions';
 import {generateNewArray, updateColumns} from '../../Utils/SortFunctions';
 import {delay} from '../../Utils/Helpers';
 

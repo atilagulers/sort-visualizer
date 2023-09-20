@@ -1,5 +1,3 @@
-import {useState} from 'react';
-
 // components
 import Navbar from './components/Navbar/Navbar';
 import Main from './components/Main/Main';

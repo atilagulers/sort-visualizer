@@ -1,5 +1,3 @@
-import React, {useEffect} from 'react';
-
 function Footer() {
   return (
     <div className="footer bg-darkPrimary">
