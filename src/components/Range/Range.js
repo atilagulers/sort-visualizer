@@ -7,7 +7,7 @@ function Range({handleChange, defaultValue, step, min, max, label, disabled}) {
         {label}
       </label>
       <input
-        className="range "
+        className="range"
         onChange={handleChange}
         type="range"
         defaultValue={defaultValue}

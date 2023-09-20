@@ -3,7 +3,7 @@ import {createContext, useContext, useReducer} from 'react';
 const initialState = {
   colWidth: 20,
   speed: 0.9,
-  selectedAlgorithm: 'bubble',
+  selectedAlgorithm: 'selection',
   chartContainerRef: null,
   isSorting: false,
 };
