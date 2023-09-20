@@ -1,6 +1,6 @@
 # Sorting Algorithm Visualizer
 
-🚀 [Live Demo](https://github.com/facebook/create-react-app).
+🚀 [Live Demo]([https://github.com/facebook/create-react-app](https://atilagulers.github.io/sort-visualizer/)).
 
 ## Description
 
