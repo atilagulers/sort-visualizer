@@ -3,6 +3,7 @@ import {useTheme} from '../../contexts/ThemeContext';
 import './Navbar.style.css';
 import Range from '../Range/Range';
 import {useStateContext} from '../../contexts/StateContext';
+import {bubbleSort, mergeSort} from '../../Utils/SortFunctions';
 
 function Navbar() {
   const {toggleTheme} = useTheme();
@@ -20,6 +21,20 @@ function Navbar() {
       type: 'CHANGE_SPEED',
       payload: {speed: e.target.value},
     });
+  };
+
+  const handleClickAlgorithm = (selectedAlgorithm) => {
+    dispatch({type: 'CHANGE_ALGORITHM', payload: {selectedAlgorithm}});
+  };
+
+  const handleClickSort = () => {
+    const columns = state.chartContainerRef.current.querySelectorAll('.column');
+    const columnsArray = Array.from(columns);
+
+    if (state.selectedAlgorithm === 'bubble')
+      bubbleSort(state.speed, columnsArray);
+    if (state.selectedAlgorithm === 'merge')
+      mergeSort(columnsArray, state.chartContainerRef, state.speed);
   };
 
   return (
@@ -51,25 +66,43 @@ function Navbar() {
         </div>
       </div>
 
-      <div className="seperator w-[1px] h-full border"></div>
+      <Seperator />
 
-      <div className="border-r-2 border-r-indigo-400"> </div>
-
-      <div className="nav-item">
+      <div
+        onClick={() => handleClickAlgorithm('bubble')}
+        className={`nav-item ${
+          state.selectedAlgorithm === 'bubble' ? 'selected' : ''
+        }`}
+      >
         <div>Bubble Sort</div>
       </div>
 
-      <div className="nav-item">
+      <div
+        onClick={() => handleClickAlgorithm('merge')}
+        className={`nav-item ${
+          state.selectedAlgorithm === 'merge' ? 'selected' : ''
+        }`}
+      >
         <div>Merge Sort</div>
       </div>
 
-      <div>
-        <button className="btn" onClick={toggleTheme}>
-          click
-        </button>
+      <Seperator />
+
+      <div onClick={handleClickSort} className="nav-item ">
+        <button>Sort!</button>
       </div>
+
+      {/*<div>
+        <button className="btn" onClick={toggleTheme}>
+          change theme
+        </button>
+      </div>*/}
     </nav>
   );
 }
+
+const Seperator = () => {
+  return <div className="seperator w-[1px] h-full border border-primary"></div>;
+};
 
 export default Navbar;

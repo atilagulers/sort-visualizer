@@ -2,11 +2,10 @@ import React, {useEffect, useRef, useState} from 'react';
 import './Main.style.css';
 import {getTextSize} from '../../Utils/Helpers';
 import {useStateContext} from '../../contexts/StateContext';
-import {bubbleSort, mergeSort} from '../../Utils/SortFunctions';
 
 function Main() {
   const chartContainerRef = useRef(null);
-  const {state} = useStateContext();
+  const {state, dispatch} = useStateContext();
   const [arr, setArr] = useState([]);
 
   useEffect(() => {
@@ -32,6 +31,8 @@ function Main() {
 
         column.appendChild(numText);
         container.appendChild(column);
+
+        dispatch({type: 'SET_CHART_CONTAINER', payload: {chartContainerRef}});
       }
     }
 
@@ -41,18 +42,10 @@ function Main() {
     }
     setArr(newArr);
     updateColumns(newArr);
-  }, [state.colWidth]);
-
-  function handleClickSort() {
-    const columns = chartContainerRef.current.querySelectorAll('.column');
-    const columnsArray = Array.from(columns);
-    bubbleSort(state.speed, columnsArray);
-    //mergeSort(columnsArray, chartContainerRef, state.speed);
-  }
+  }, [state.colWidth, dispatch]);
 
   return (
     <div className="main">
-      <button onClick={handleClickSort}>sort</button>
       <div className="chart flex" ref={chartContainerRef}></div>
     </div>
   );

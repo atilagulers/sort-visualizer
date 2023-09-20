@@ -3,6 +3,8 @@ import {createContext, useContext, useReducer} from 'react';
 const initialState = {
   colWidth: 20,
   speed: 0.8,
+  selectedAlgorithm: 'bubble',
+  chartContainerRef: null,
 };
 
 const reducer = (state, action) => {
@@ -11,6 +13,10 @@ const reducer = (state, action) => {
       return {...state, colWidth: parseInt(action.payload.colWidth)};
     case 'CHANGE_SPEED':
       return {...state, speed: parseInt(action.payload.speed)};
+    case 'SET_CHART_CONTAINER':
+      return {...state, chartContainerRef: action.payload.chartContainerRef};
+    case 'CHANGE_ALGORITHM':
+      return {...state, selectedAlgorithm: action.payload.selectedAlgorithm};
     default:
       return;
   }
