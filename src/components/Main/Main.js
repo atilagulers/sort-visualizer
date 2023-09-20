@@ -16,7 +16,8 @@ function Main() {
       for (let i = 0; i < arr.length; i++) {
         const num = arr[i];
         const column = document.createElement('div');
-        column.className = 'column flex flex-col justify-end mx-[1px] bg-light';
+        column.className =
+          'column flex flex-col justify-end mx-[1px] bg-lightPrimary';
         column.style.width = state.colWidth + 'px'; // 30px - 100px
         column.style.height = num + '%';
 
@@ -45,15 +46,13 @@ function Main() {
   function handleClickSort() {
     const columns = chartContainerRef.current.querySelectorAll('.column');
     const columnsArray = Array.from(columns);
-    //bubbleSort(state.speed, columnsArray);
-    mergeSort(columnsArray, chartContainerRef, state.speed);
+    bubbleSort(state.speed, columnsArray);
+    //mergeSort(columnsArray, chartContainerRef, state.speed);
   }
 
   return (
     <div className="main">
-      <button onClick={handleClickSort} className="bg-white">
-        sort
-      </button>
+      <button onClick={handleClickSort}>sort</button>
       <div className="chart flex" ref={chartContainerRef}></div>
     </div>
   );

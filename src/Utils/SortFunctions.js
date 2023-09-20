@@ -28,8 +28,12 @@ const merge = async (leftArr, rightArr, chartContainerRef, speed) => {
     const greenColor = 'bg-green-400';
     const redColor = 'bg-red-400';
 
+    leftCol.classList.remove('bg-lightPrimary');
+    rightCol.classList.remove('bg-lightPrimary');
+
     leftCol.classList.add(greenColor);
     rightCol.classList.add(greenColor);
+
     const leftNum = parseInt(leftCol.getAttribute('data-number'));
     const rightNum = parseInt(rightCol.getAttribute('data-number'));
 
@@ -62,6 +66,8 @@ const merge = async (leftArr, rightArr, chartContainerRef, speed) => {
     rightCol.classList.remove(greenColor);
     leftCol.classList.remove(redColor);
     rightCol.classList.remove(redColor);
+    leftCol.classList.add('bg-lightPrimary');
+    rightCol.classList.add('bg-lightPrimary');
   }
 
   return [...sortedArr, ...leftArr, ...rightArr];
@@ -92,6 +98,8 @@ export const bubbleSort = async (speed, columns) => {
 
       col1.classList.add(greenColor);
       col2.classList.add(greenColor);
+      col1.classList.remove('bg-lightPrimary');
+      col2.classList.remove('bg-lightPrimary');
 
       const num1 = parseInt(col1.getAttribute('data-number'));
       const num2 = parseInt(col2.getAttribute('data-number'));
@@ -109,6 +117,9 @@ export const bubbleSort = async (speed, columns) => {
       col2.classList.remove(redColor);
       col1.classList.remove(greenColor);
       col2.classList.remove(greenColor);
+
+      col1.classList.add('bg-lightPrimary');
+      col2.classList.add('bg-lightPrimary');
     }
   }
 };

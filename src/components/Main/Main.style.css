@@ -1,5 +1,5 @@
 .main {
-  @apply w-[100%] h-[100%] bg-primary;
+  @apply w-[100%] h-[100%] bg-darkSecondary;
 }
 
 .chart {

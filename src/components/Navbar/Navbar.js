@@ -23,7 +23,7 @@ function Navbar() {
   };
 
   return (
-    <nav className="flex items-center gap-10 h-20 text-center  px-6 shadow  w-full bg-light dark:bg-secondary">
+    <nav className="flex items-center gap-10 h-20 text-center  px-6 shadow  w-full bg-darkPrimary text-white">
       <div className="flex items-center gap-10">
         <h1 className="text-3xl font-bold">Sort Algorithms</h1>
       </div>
@@ -56,7 +56,11 @@ function Navbar() {
       <div className="border-r-2 border-r-indigo-400"> </div>
 
       <div className="nav-item">
-        <div>here 3</div>
+        <div>Bubble Sort</div>
+      </div>
+
+      <div className="nav-item">
+        <div>Merge Sort</div>
       </div>
 
       <div>

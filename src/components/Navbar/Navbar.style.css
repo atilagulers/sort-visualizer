@@ -1,5 +1,5 @@
 .nav-item {
-  @apply px-2  h-full flex place-items-center hover:bg-primary hover:text-white;
+  @apply px-2  h-full flex place-items-center  hover:bg-primary;
 }
 
 /*hover:border-b-2 hover:border-primary;*/
