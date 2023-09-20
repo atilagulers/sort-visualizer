@@ -3,6 +3,7 @@ import {useState} from 'react';
 // components
 import Navbar from './components/Navbar/Navbar';
 import Main from './components/Main/Main';
+import Footer from './components/Footer/Footer';
 
 // contexts
 import {StateProvider} from './contexts/StateContext';
@@ -15,6 +16,7 @@ function App() {
         <ThemeProvider>
           <Navbar />
           <Main />
+          <Footer />
         </ThemeProvider>
       </StateProvider>
     </div>
