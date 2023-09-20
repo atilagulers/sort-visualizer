@@ -4,6 +4,7 @@ import './Navbar.style.css';
 import Range from '../Range/Range';
 import {useStateContext} from '../../contexts/StateContext';
 import {bubbleSort, mergeSort} from '../../Utils/SortFunctions';
+import {generateNewArray, updateColumns} from '../../Utils/SortFunctions';
 
 function Navbar() {
   const {toggleTheme} = useTheme();
@@ -37,13 +38,25 @@ function Navbar() {
       mergeSort(columnsArray, state.chartContainerRef, state.speed);
   };
 
+  const handleClickGenerateNew = () => {
+    const newArr = generateNewArray(state.colWidth);
+    updateColumns(newArr, state.colWidth, state.chartContainerRef, dispatch);
+  };
+
   return (
-    <nav className="flex items-center gap-10 h-20 text-center  px-6 shadow  w-full bg-darkPrimary text-white">
+    <nav className="flex items-center gap-10 h-[70px] text-center  px-6 shadow  w-full bg-darkPrimary text-white">
       <div className="flex items-center gap-10">
         <h1 className="text-3xl font-bold">Sort Algorithms</h1>
       </div>
 
-      <div className="px-2 h-full flex items-center">
+      <div
+        onClick={handleClickGenerateNew}
+        className="px-2 flex items-center gap-8"
+      >
+        <div className={`nav-item  py-2 border border-primary rounded-lg`}>
+          <div>Generate new array</div>
+        </div>
+
         <div>
           <Range
             handleChange={handleChangeColWidth}
@@ -89,7 +102,11 @@ function Navbar() {
       <Seperator />
 
       <div onClick={handleClickSort} className="nav-item ">
-        <button>Sort!</button>
+        <button
+          className={`border border-primary py-2 px-4 rounded-lg bg-primary hover:text-black tracking-wider`}
+        >
+          Sort!
+        </button>
       </div>
 
       {/*<div>

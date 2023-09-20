@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import './Range.style.css';
 
 function Range({handleChange, defaultValue, step, min, max, label}) {
   return (
@@ -7,6 +7,7 @@ function Range({handleChange, defaultValue, step, min, max, label}) {
         {label}
       </label>
       <input
+        className="range "
         onChange={handleChange}
         type="range"
         defaultValue={defaultValue}

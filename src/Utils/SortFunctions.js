@@ -1,4 +1,5 @@
 import {delay} from './Helpers';
+import {getTextSize} from './Helpers';
 
 export const mergeSort = async (arr, chartContainerRef, speed) => {
   if (arr.length <= 1) {
@@ -121,5 +122,39 @@ export const bubbleSort = async (speed, columns) => {
       col1.classList.add('bg-lightPrimary');
       col2.classList.add('bg-lightPrimary');
     }
+  }
+};
+
+export const generateNewArray = (colWidth) => {
+  const newArr = new Array(Math.round(1200 / colWidth)); // chart width / col width
+  for (let i = 0; i < newArr.length; i++) {
+    newArr[i] = Math.round(Math.random() * 95) + 5;
+  }
+
+  return newArr;
+};
+
+export const updateColumns = (arr, colWidth, chartContainerRef, dispatch) => {
+  const container = chartContainerRef.current;
+  container.innerHTML = '';
+  for (let i = 0; i < arr.length; i++) {
+    const num = arr[i];
+    const column = document.createElement('div');
+    column.className =
+      'column flex flex-col justify-end mx-[1px] bg-lightPrimary';
+    column.style.width = colWidth + 'px'; // 30px - 100px
+    column.style.height = num + '%';
+
+    column.dataset.number = num;
+    column.dataset.index = i;
+
+    const numText = document.createElement('div');
+    numText.className = `text-center -rotate-90 mb-2 ${getTextSize(colWidth)}`;
+    numText.textContent = num;
+
+    column.appendChild(numText);
+    container.appendChild(column);
+
+    dispatch({type: 'SET_CHART_CONTAINER', payload: {chartContainerRef}});
   }
 };
