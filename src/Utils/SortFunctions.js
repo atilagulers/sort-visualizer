@@ -1,7 +1,7 @@
 import {delay} from './Helpers';
 import {getTextSize} from './Helpers';
 
-export const mergeSort = async (arr, chartContainerRef, speed) => {
+export const mergeSort = async (arr, chartContainerRef, speed, cb) => {
   if (arr.length <= 1) {
     return arr;
   }
@@ -9,12 +9,19 @@ export const mergeSort = async (arr, chartContainerRef, speed) => {
   const middle = Math.ceil(arr.length / 2);
   const left = arr.slice(0, middle);
   const right = arr.slice(middle);
+  const leftSorted = await mergeSort(left, chartContainerRef, speed);
+  const rightSorted = await mergeSort(right, chartContainerRef, speed);
   const sortedArr = await merge(
-    await mergeSort(left, chartContainerRef, speed),
-    await mergeSort(right, chartContainerRef, speed),
+    leftSorted,
+    rightSorted,
     chartContainerRef,
     speed
   );
+
+  if (cb) {
+    cb();
+  }
+
   return sortedArr;
 };
 
@@ -88,7 +95,7 @@ export const swapColumns = (col1, col2) => {
   col2.firstChild.textContent = tmpNumberText;
 };
 
-export const bubbleSort = async (speed, columns) => {
+export const bubbleSort = async (speed, columns, cb) => {
   for (let i = 0; i < columns.length - 1; i++) {
     for (let j = 0; j < columns.length - i - 1; j++) {
       const col1 = columns[j];
@@ -123,6 +130,7 @@ export const bubbleSort = async (speed, columns) => {
       col2.classList.add('bg-lightPrimary');
     }
   }
+  cb();
 };
 
 export const generateNewArray = (colWidth) => {

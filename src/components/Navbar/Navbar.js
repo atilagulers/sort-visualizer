@@ -7,10 +7,12 @@ import {bubbleSort, mergeSort} from '../../Utils/SortFunctions';
 import {generateNewArray, updateColumns} from '../../Utils/SortFunctions';
 
 function Navbar() {
-  const {toggleTheme} = useTheme();
+  //const {toggleTheme} = useTheme();
 
   const {state, dispatch} = useStateContext();
+
   const handleChangeColWidth = (e) => {
+    e.preventDefault();
     dispatch({
       type: 'CHANGE_COLUMN_WIDTH',
       payload: {colWidth: 300 - e.target.value},
@@ -18,6 +20,7 @@ function Navbar() {
   };
 
   const handleChangeSpeed = (e) => {
+    e.preventDefault();
     dispatch({
       type: 'CHANGE_SPEED',
       payload: {speed: e.target.value},
@@ -25,20 +28,33 @@ function Navbar() {
   };
 
   const handleClickAlgorithm = (selectedAlgorithm) => {
+    if (state.isSorting) return;
     dispatch({type: 'CHANGE_ALGORITHM', payload: {selectedAlgorithm}});
+  };
+
+  const enableNavItemsCb = () => {
+    dispatch({type: 'SET_IS_SORTING', payload: {isSorting: false}});
   };
 
   const handleClickSort = () => {
     const columns = state.chartContainerRef.current.querySelectorAll('.column');
     const columnsArray = Array.from(columns);
 
+    dispatch({type: 'SET_IS_SORTING', payload: {isSorting: true}});
+
     if (state.selectedAlgorithm === 'bubble')
-      bubbleSort(state.speed, columnsArray);
+      bubbleSort(state.speed, columnsArray, enableNavItemsCb);
     if (state.selectedAlgorithm === 'merge')
-      mergeSort(columnsArray, state.chartContainerRef, state.speed);
+      mergeSort(
+        columnsArray,
+        state.chartContainerRef,
+        state.speed,
+        enableNavItemsCb
+      );
   };
 
   const handleClickGenerateNew = () => {
+    enableNavItemsCb();
     const newArr = generateNewArray(state.colWidth);
     updateColumns(newArr, state.colWidth, state.chartContainerRef, dispatch);
   };
@@ -49,12 +65,9 @@ function Navbar() {
         <h1 className="text-3xl font-bold">Sort Algorithms</h1>
       </div>
 
-      <div
-        onClick={handleClickGenerateNew}
-        className="px-2 flex items-center gap-8"
-      >
+      <div className="px-2 flex items-center gap-8">
         <div className={`nav-item  py-2 border border-primary rounded-lg`}>
-          <div>Generate new array</div>
+          <div onClick={handleClickGenerateNew}>Generate new array</div>
         </div>
 
         <div>
@@ -65,6 +78,7 @@ function Navbar() {
             min={10}
             max={300}
             label={'count'}
+            disabled={state.isSorting}
           />
         </div>
         <div>
@@ -75,6 +89,7 @@ function Navbar() {
             min={0.1}
             max={1}
             label={'speed'}
+            disabled={state.isSorting}
           />
         </div>
       </div>
@@ -86,6 +101,7 @@ function Navbar() {
         className={`nav-item ${
           state.selectedAlgorithm === 'bubble' ? 'selected' : ''
         }`}
+        disabled={state.isSorting}
       >
         <div>Bubble Sort</div>
       </div>
@@ -95,15 +111,20 @@ function Navbar() {
         className={`nav-item ${
           state.selectedAlgorithm === 'merge' ? 'selected' : ''
         }`}
+        disabled={state.isSorting}
       >
         <div>Merge Sort</div>
       </div>
 
       <Seperator />
 
-      <div onClick={handleClickSort} className="nav-item ">
+      <div
+        onClick={handleClickSort}
+        className="nav-item disabled:hover:text-white"
+      >
         <button
-          className={`border border-primary py-2 px-4 rounded-lg bg-primary hover:text-black tracking-wider`}
+          className={`border border-primary py-2 px-4 rounded-lg bg-primary hover:text-black tracking-wider disabled:bg-secondary `}
+          disabled={state.isSorting}
         >
           Sort!
         </button>

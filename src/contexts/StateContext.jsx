@@ -2,9 +2,10 @@ import {createContext, useContext, useReducer} from 'react';
 
 const initialState = {
   colWidth: 20,
-  speed: 0.8,
+  speed: 0.9,
   selectedAlgorithm: 'bubble',
   chartContainerRef: null,
+  isSorting: false,
 };
 
 const reducer = (state, action) => {
@@ -17,6 +18,8 @@ const reducer = (state, action) => {
       return {...state, chartContainerRef: action.payload.chartContainerRef};
     case 'CHANGE_ALGORITHM':
       return {...state, selectedAlgorithm: action.payload.selectedAlgorithm};
+    case 'SET_IS_SORTING':
+      return {...state, isSorting: action.payload.isSorting};
     default:
       return;
   }

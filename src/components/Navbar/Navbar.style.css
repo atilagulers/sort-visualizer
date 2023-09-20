@@ -6,6 +6,15 @@
   @apply text-primary;
 }
 
+button:disabled {
+  background-color: rgba(0, 0, 0, 0.5) !important;
+  color: gray !important;
+}
+
+button:disabled:hover {
+  color: gray !important;
+}
+
 /*.sort-btn:hover {
   @apply text-primary;
   text-shadow: 0px 0px 10px;

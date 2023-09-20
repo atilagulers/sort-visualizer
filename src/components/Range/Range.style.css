@@ -1,3 +1,7 @@
 .range {
   @apply accent-primary;
 }
+
+label {
+  pointer-events: none;
+}
