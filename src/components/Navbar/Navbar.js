@@ -9,6 +9,7 @@ import {useState} from 'react';
 function Navbar() {
   //const {toggleTheme} = useTheme();
   const [navbarActive, setNavbarActive] = useState(true);
+  const [time, setTime] = useState(0);
 
   const {state, dispatch} = useStateContext();
 
@@ -32,7 +33,6 @@ function Navbar() {
     if (state.isSorting) return;
     dispatch({type: 'CHANGE_ALGORITHM', payload: {selectedAlgorithm}});
   };
-
   const enableNavItemsCb = () => {
     dispatch({type: 'SET_IS_SORTING', payload: {isSorting: false}});
   };
@@ -43,23 +43,30 @@ function Navbar() {
 
     dispatch({type: 'SET_IS_SORTING', payload: {isSorting: true}});
 
+    const startTime = new Date().getTime();
+
+    let passingTime = 0;
+    const countdownInterval = setInterval(() => {
+      passingTime = ((new Date().getTime() - startTime) / 1000).toFixed(2);
+      setTime(passingTime);
+    }, 10);
+
     if (state.selectedAlgorithm === 'selection')
-      selectionSort(
-        columnsArray,
-        state.speed,
-        state.chartContainerRef,
-        enableNavItemsCb
-      );
+      selectionSort(columnsArray, state.speed, state.chartContainerRef, () => {
+        clearInterval(countdownInterval);
+        enableNavItemsCb();
+      });
 
     if (state.selectedAlgorithm === 'bubble')
-      bubbleSort(state.speed, columnsArray, enableNavItemsCb);
+      bubbleSort(state.speed, columnsArray, () => {
+        clearInterval(countdownInterval);
+        enableNavItemsCb();
+      });
     if (state.selectedAlgorithm === 'merge')
-      mergeSort(
-        columnsArray,
-        state.chartContainerRef,
-        state.speed,
-        enableNavItemsCb
-      );
+      mergeSort(columnsArray, state.chartContainerRef, state.speed, () => {
+        clearInterval(countdownInterval);
+        enableNavItemsCb();
+      });
   };
 
   const selectionSort = async (arr, speed, chartContainerRef, cb) => {
@@ -116,6 +123,7 @@ function Navbar() {
   };
 
   const handleClickGenerateNew = () => {
+    if (state.isSorting) return;
     enableNavItemsCb();
     const newArr = generateNewArray(state.colWidth);
     updateColumns(newArr, state.colWidth, state.chartContainerRef, dispatch);
@@ -132,6 +140,12 @@ function Navbar() {
         className="icon text-2xl absolute right-[-40px] top-5"
       >
         <MenuIcon />
+      </div>
+      <div className="absolute top-20">
+        <div className="time-board bg-gray-700 px-5 py-2">
+          <div>time: {time}</div>
+          <div>speed: {state.speed}</div>
+        </div>
       </div>
 
       <div className="brand flex items-center gap-5">
@@ -154,7 +168,6 @@ function Navbar() {
           />
         </div>
         <div>
-          {console.log(state.speed)}
           <Range
             handleChange={handleChangeSpeed}
             defaultValue={state.speed}
