@@ -13,8 +13,8 @@ function Main() {
   }, [state.colWidth, dispatch]);
 
   return (
-    <div className="main">
-      <div className="chart flex" ref={chartContainerRef}></div>
+    <div className="main h-screen w-screen flex justify-center items-center">
+      <div className="chart w-full" ref={chartContainerRef}></div>
     </div>
   );
 }

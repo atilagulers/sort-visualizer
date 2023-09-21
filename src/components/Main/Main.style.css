@@ -3,9 +3,5 @@
 }
 
 .chart {
-  @apply w-[1200px] h-[85%]  mx-auto flex items-end;
-}
-
-.column {
-  transition: transform 0.3s ease-in-out;
+  @apply w-[100vw] h-[85%]  flex items-end justify-center overflow-auto;
 }

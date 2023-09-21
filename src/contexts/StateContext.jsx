@@ -2,7 +2,7 @@ import {createContext, useContext, useReducer} from 'react';
 
 const initialState = {
   colWidth: 20,
-  speed: 0.9,
+  speed: 1.5,
   selectedAlgorithm: 'selection',
   chartContainerRef: null,
   isSorting: false,
@@ -13,7 +13,7 @@ const reducer = (state, action) => {
     case 'CHANGE_COLUMN_WIDTH':
       return {...state, colWidth: parseInt(action.payload.colWidth)};
     case 'CHANGE_SPEED':
-      return {...state, speed: parseInt(action.payload.speed)};
+      return {...state, speed: parseFloat(action.payload.speed)};
     case 'SET_CHART_CONTAINER':
       return {...state, chartContainerRef: action.payload.chartContainerRef};
     case 'CHANGE_ALGORITHM':

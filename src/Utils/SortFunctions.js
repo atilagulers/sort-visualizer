@@ -134,7 +134,11 @@ export const bubbleSort = async (speed, columns, cb) => {
 };
 
 export const generateNewArray = (colWidth) => {
-  const newArr = new Array(Math.round(1200 / colWidth)); // chart width / col width
+  const vwValue = 80;
+  const newArr = new Array(
+    Math.round(((vwValue / 100) * window.innerWidth) / colWidth)
+  );
+
   for (let i = 0; i < newArr.length; i++) {
     newArr[i] = Math.round(Math.random() * 95) + 5;
   }
